@@ -1,8 +1,7 @@
 # Run More Ads — Main Website
 
-Main agency website: https://runmoreads.online (also www.runmoreads.online).
-
-The booking funnel is a separate project and repository at https://letwork.runmoreads.online.
+Main agency site: https://runmoreads.online (also www.runmoreads.online).
+The separate booking funnel remains at https://letwork.runmoreads.online.
 
 ## Run locally
 
@@ -12,16 +11,22 @@ Requires Node.js. No dependencies or build step.
 npm start
 ```
 
-Open http://127.0.0.1:4173.
+Open http://127.0.0.1:4173. Vercel uses Other, no build command, and `dist` as the output directory, as specified in `vercel.json`.
 
-## Deployment
+## Design and content
 
-Import this repository into Vercel. Use Other, no build command, output directory `dist`. The settings are also supplied in `vercel.json`.
+The October 2026 redesign interprets the owner's photograph of “The Method”: black background, oversized type, thin rules, static numbers, and no photography or video. There is no team gallery, loading screen, marquee, count-up, or scroll animation. Small FAQ indicator and button press transitions respect reduced-motion preferences.
 
-English is the default. The footer globe link reloads the same page in Azerbaijani using `?lang=az`. Internal links preserve the selected language. Translations are in `dist/assets/run-more-ads/site/translations-az.json`.
+`redesign-site.mjs` generates the homepage, about, and results pages, and updates completed enquiry, article, and legal pages to use the shared shell. Run `node redesign-site.mjs` after editing its content. Styling is in `dist/assets/run-more-ads/site/method.css`.
 
-## Enquiries and assets
+`REDESIGN.md` documents the reference research, selected campaign figures, and their limitations. Results are reconstructed from the founder's personal campaign records, approximate, and attributed accordingly. Started messaging conversations are not represented as patients or sales. The agency quote is expressly its own working standard, not a customer testimonial. No customer quotes or identities are invented.
 
-The booking form sends validated enquiries to the existing Base44 CRM; it does not email or reserve a calendar slot. The public endpoint is configured in `dist/assets/run-more-ads/site/crm-config.json`; no secret key is included. Service and budget identifiers remain stable across languages.
+Unused original media/Framer assets remain for recovery but are not loaded or referenced by the redesigned public pages. The only visible image is the owner's logo.
 
-Videos are stock footage; case studies are explicitly labeled creative concepts rather than client campaign results. Team portraits are generated illustrative people. `media-sources.json` records the video sources and license links. Logo supplied by the owner.
+## Languages
+
+English is the default on all domains. The footer globe link reloads the same page in Azerbaijani with `?lang=az`; the English link removes that parameter. Internal page links preserve the selected language. The dictionary is in `dist/assets/run-more-ads/site/translations-az.json`.
+
+## Enquiries
+
+The booking form preserves its Base44 CRM endpoint and payload. It sends validated enquiries directly to the CRM, does not email them, and does not reserve a calendar slot. The public endpoint is in `dist/assets/run-more-ads/site/crm-config.json`; no secret key is included. Service and budget identifiers remain stable across languages. A separate calendar link opens the existing funnel.

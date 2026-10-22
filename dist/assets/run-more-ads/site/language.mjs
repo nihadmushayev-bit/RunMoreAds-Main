@@ -72,7 +72,7 @@ new MutationObserver(() => {
   if (queued) return;
   queued = true;
   requestAnimationFrame(() => { queued = false; updatePage(); });
-}).observe(document.body, { childList: true, subtree: true, characterData: true });
+}).observe(document.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['aria-label','placeholder','title'] });
 
 // Preserve the selected language when navigating between retained and standalone pages.
 window.addEventListener('click', event => {
