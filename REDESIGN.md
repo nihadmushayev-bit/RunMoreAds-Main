@@ -35,7 +35,9 @@ The owner's follow-up requests small, fast animations, overriding the earlier st
 
 ## Follow-up lighting and button shapes
 
-The latest owner feedback replaces the earlier pill actions with restrained 6px corners across navigation, hero, closing, and form buttons. Five stronger circular white light pools are painted on the full-width body canvas, independently of the 1600px content container and section boundaries. Their positions alternate across the page; a minimum 4200px background height keeps them spaced on shorter pages. Gradients fade completely into black without section clipping, filters, images, or continuous animation. Mobile uses a 420px light radius. A 260ms whole-page fade rises from black on entry; navigation crossfades take 110–240ms. Reduced-motion preferences disable the fades.
+The latest owner feedback replaces the earlier pill actions with restrained 6px corners across navigation, hero, closing, and form buttons. Five stronger circular white light pools are painted on the full-width body canvas, independently of the 1600px content container and section boundaries. Their positions alternate across the page; a minimum 4200px background height keeps them spaced on shorter pages. Gradients fade completely into black without section clipping, filters, images, or continuous animation. Mobile uses a 420px light radius.
+
+Every page runs `entry.js` in the head before its first paint. A black screen overlay fades to transparent in 260ms only after `language.mjs` has applied the selected language. Both language-toggle directions reload through the same entry sequence, as does a direct page load. Native view transitions are disabled to avoid snapshot timing bypassing the black reveal. Back/forward cache restores replay it; a 3-second fallback reveals content if a script or translation request fails. With JavaScript disabled, no overlay is installed. Reduced-motion preferences disable the reveal.
 
 ## Implementation
 

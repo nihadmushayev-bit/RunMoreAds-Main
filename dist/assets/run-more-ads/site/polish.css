@@ -1,11 +1,8 @@
 /* Short, interruptible feedback; no scrolling timelines or continuous motion. */
-@view-transition{navigation:auto}
-::view-transition-old(root){animation:page-out 110ms ease-in both}
-::view-transition-new(root){animation:page-in 240ms ease-out both}
-@keyframes page-out{to{opacity:0}}
-@keyframes page-in{from{opacity:0}to{opacity:1}}
-@keyframes site-arrive{from{opacity:0}to{opacity:1}}
-body{animation:site-arrive 260ms ease-out both}
+@view-transition{navigation:none}
+@keyframes entry-reveal{from{opacity:1}to{opacity:0}}
+html[data-page-entering]::after{content:'';position:fixed;inset:0;z-index:30;background:#000;pointer-events:none;opacity:1}
+html[data-page-entering][data-page-ready]::after{animation:entry-reveal 260ms ease-out both}
 main{animation:none}
 .wordmark{gap:10px;font-size:14px;flex-shrink:0}.wordmark>span{max-width:none;white-space:nowrap;line-height:1.2}.footer-top .wordmark{font-size:14px}
 .hero-note>span{display:block}.hero-note .hero-note-lead{margin-bottom:15px}.hero-note>span+span{color:var(--muted);font-size:13px;line-height:1.6}
@@ -54,4 +51,4 @@ body{
  .faq summary{padding-block:21px}.cta .button{padding-inline:25px}
  body{--glow-radius:420px}
 }
-@media(prefers-reduced-motion:reduce){body,main{animation:none!important}::view-transition-old(root),::view-transition-new(root){animation:none!important}.site-header nav,.menu-toggle span,.arrow{transition:none!important}}
+@media(prefers-reduced-motion:reduce){html[data-page-entering]::after{content:none}body,main{animation:none!important}.site-header nav,.menu-toggle span,.arrow{transition:none!important}}

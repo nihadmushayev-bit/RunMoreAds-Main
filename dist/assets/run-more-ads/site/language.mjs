@@ -5,7 +5,7 @@ const dictionary = language === 'az'
   ? await fetch('/assets/run-more-ads/site/translations-az.json').then(response => {
     if (!response.ok) throw new Error('Translation file could not be loaded');
     return response.json();
-  }) : {};
+  }).catch(() => ({})) : {};
 const normalize = value => value.replace(/\s+/g, ' ').trim();
 const translate = value => Object.hasOwn(dictionary, normalize(value)) ? dictionary[normalize(value)] : value;
 const globe = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c5 5 5 13 0 18M12 3c-5 5-5 13 0 18"/></svg>';
@@ -67,6 +67,8 @@ function updatePage() {
 
 if (document.readyState === 'loading') await new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true }));
 updatePage();
+// Reveal only after the selected language has been applied, on every full load.
+window.dispatchEvent(new Event('rma:page-ready'));
 let queued = false;
 new MutationObserver(() => {
   if (queued) return;
