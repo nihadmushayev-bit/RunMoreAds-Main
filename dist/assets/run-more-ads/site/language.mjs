@@ -1,61 +1,45 @@
-// URL-based language selection keeps English as the default on every domain.
-const language = new URL(location.href).searchParams.get('lang') === 'az' ? 'az' : 'en';
+// Query-based language selection: English remains the default.
+const requested = new URL(location.href).searchParams.get('lang');
+const language = ['tr', 'az'].includes(requested) ? requested : 'en';
 document.documentElement.lang = language;
-const dictionary = language === 'az'
-  ? await fetch('/assets/run-more-ads/site/translations-az.json').then(response => {
-    if (!response.ok) throw new Error('Translation file could not be loaded');
-    return response.json();
-  }).catch(() => ({})) : {};
+const dictionary = language === 'en' ? {} : await fetch('/assets/run-more-ads/site/translations-' + language + '.json')
+  .then(response => { if (!response.ok) throw new Error('Translation unavailable'); return response.json(); })
+  .catch(() => ({}));
 const normalize = value => value.replace(/\s+/g, ' ').trim();
-const translate = value => Object.hasOwn(dictionary, normalize(value)) ? dictionary[normalize(value)] : value;
-const globe = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c5 5 5 13 0 18M12 3c-5 5-5 13 0 18"/></svg>';
-const target = new URL(location.href);
-target.hash = '';
-if (language === 'en') target.searchParams.set('lang', 'az');
-else target.searchParams.delete('lang');
-
-function updatePage() {
-  for (const footer of document.querySelectorAll('footer')) {
-    if (footer.querySelector('.rma-language-row')) continue;
-    const row = document.createElement('div');
-    row.className = 'rma-language-row';
-    const link = document.createElement('a');
-    link.className = 'rma-language-switch';
-    link.href = target.href;
-    link.hreflang = language === 'en' ? 'az' : 'en';
-    link.lang = link.hreflang;
-    link.innerHTML = globe + '<span>' + (language === 'en' ? 'Azərbaycan dili' : 'English') + '</span>';
-    row.append(link);
-    footer.append(row);
+function translate(value) {
+  const key = normalize(value);
+  let replacement = dictionary[key];
+  if (replacement === undefined && key.startsWith('“') && key.endsWith('”') && Object.hasOwn(dictionary, key.slice(1, -1))) {
+    replacement = '“' + dictionary[key.slice(1, -1)] + '”';
   }
-  for (const link of document.querySelectorAll('a[href]')) {
-    if (link.classList.contains('rma-language-switch') || link.hasAttribute('download')) continue;
+  return replacement === undefined ? value : value.replace(/\S[\s\S]*\S|\S/, replacement);
+}
+function updatePage() {
+  for (const link of document.querySelectorAll('a[href]:not([data-language])')) {
+    if (link.hasAttribute('download')) continue;
     const raw = link.getAttribute('href');
     if (!raw || raw.startsWith('#')) continue;
     const url = new URL(raw, location.href);
     if (url.origin !== location.origin || !/^https?:$/.test(url.protocol)) continue;
-    if (language === 'az') url.searchParams.set('lang', 'az');
-    else url.searchParams.delete('lang');
+    if (language === 'en') url.searchParams.delete('lang');
+    else url.searchParams.set('lang', language);
     if (link.href !== url.href) link.href = url.href;
   }
-  if (language !== 'az') return;
+  if (language === 'en') return;
   document.title = translate(document.title);
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
     acceptNode(node) {
-      return node.parentElement?.closest('script,style,textarea,code,pre,svg,.rma-language-switch,[contenteditable]')
+      return node.parentElement?.closest('script,style,textarea,code,pre,svg,[data-no-translate],[contenteditable]')
         ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
     }
   });
   let node;
   while ((node = walker.nextNode())) {
-    const original = node.nodeValue;
-    const key = normalize(original);
-    if (!Object.hasOwn(dictionary, key)) continue;
-    const replacement = original.replace(/\S[\s\S]*\S|\S/, dictionary[key]);
-    if (replacement !== original) node.nodeValue = replacement;
+    const translated = translate(node.nodeValue);
+    if (translated !== node.nodeValue) node.nodeValue = translated;
   }
   for (const element of document.querySelectorAll('[placeholder],[aria-label],[title]')) {
-    if (element.closest('.rma-language-switch')) continue;
+    if (element.closest('[data-no-translate]')) continue;
     for (const attribute of ['placeholder', 'aria-label', 'title']) {
       if (!element.hasAttribute(attribute)) continue;
       const original = element.getAttribute(attribute);
@@ -64,26 +48,77 @@ function updatePage() {
     }
   }
 }
-
-if (document.readyState === 'loading') await new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true }));
+if (document.readyState === 'loading') await new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, {once:true}));
+const picker = document.querySelector('.language-picker');
+const toggle = picker?.querySelector('.language-toggle');
+const options = picker?.querySelector('.language-options');
+const labels = {en:'English', tr:'Türkçe', az:'Azərbaycan türkcəsi'};
+function setLanguageMenu(open, focusToggle = false) {
+  if (!picker || !toggle || !options) return;
+  picker.classList.toggle('open', open);
+  toggle.setAttribute('aria-expanded', String(open));
+  options.inert = !open;
+  if (focusToggle) toggle.focus();
+}
+if (picker) {
+  picker.querySelector('.language-current').textContent = labels[language];
+  toggle.setAttribute('aria-label', language === 'en' ? 'Choose language' : 'Dil seçin');
+  for (const link of options.querySelectorAll('[data-language]')) {
+    const code = link.dataset.language;
+    const url = new URL(location.href);
+    url.hash = '';
+    if (code === 'en') url.searchParams.delete('lang');
+    else url.searchParams.set('lang', code);
+    link.href = url.href;
+    link.textContent = labels[code];
+    if (code === language) link.setAttribute('aria-current', 'true');
+  }
+  toggle.addEventListener('click', () => setLanguageMenu(toggle.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('pointerdown', event => {
+    if (!picker.contains(event.target)) setLanguageMenu(false);
+  });
+  picker.addEventListener('focusout', event => {
+    if (!picker.contains(event.relatedTarget)) setLanguageMenu(false);
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && picker.classList.contains('open')) {
+      event.preventDefault();
+      event.stopPropagation();
+      setLanguageMenu(false, true);
+    }
+  }, true);
+  picker.addEventListener('keydown', event => {
+    const links = [...options.querySelectorAll('a')];
+    const index = links.indexOf(document.activeElement);
+    if (document.activeElement === toggle && ['ArrowDown','ArrowUp'].includes(event.key)) {
+      event.preventDefault();
+      setLanguageMenu(true);
+      links[event.key === 'ArrowDown' ? 0 : links.length - 1].focus();
+    } else if (index >= 0 && ['ArrowDown','ArrowRight','ArrowUp','ArrowLeft','Home','End'].includes(event.key)) {
+      event.preventDefault();
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? links.length - 1
+        : (index + (['ArrowDown','ArrowRight'].includes(event.key) ? 1 : -1) + links.length) % links.length;
+      links[next].focus();
+    }
+  });
+  window.addEventListener('rma:navigation-closed', () => setLanguageMenu(false));
+  matchMedia('(max-width:1000px)').addEventListener('change', () => setLanguageMenu(false));
+}
 updatePage();
-// Reveal only after the selected language has been applied, on every full load.
 window.dispatchEvent(new Event('rma:page-ready'));
 let queued = false;
 new MutationObserver(() => {
   if (queued) return;
   queued = true;
-  requestAnimationFrame(() => { queued = false; updatePage(); });
-}).observe(document.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['aria-label','placeholder','title'] });
-
-// Preserve the selected language when navigating between retained and standalone pages.
+  requestAnimationFrame(() => {queued = false; updatePage();});
+}).observe(document.body, {childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['aria-label','placeholder','title']});
 window.addEventListener('click', event => {
   if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
   const link = event.target.closest?.('a[href]');
   if (!link || link.target === '_blank' || link.hasAttribute('download')) return;
   const url = new URL(link.href, location.href);
   if (url.origin !== location.origin) return;
-  if (link.classList.contains('rma-language-switch') || (language === 'az' && url.pathname !== location.pathname)) {
+  if (link.hasAttribute('data-language') || (language !== 'en' && url.pathname !== location.pathname)) {
     event.preventDefault();
     event.stopImmediatePropagation();
     location.assign(url.href);

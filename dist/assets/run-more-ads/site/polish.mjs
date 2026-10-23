@@ -1,5 +1,5 @@
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-const mobile = matchMedia('(max-width: 700px)');
+const mobile = matchMedia('(max-width: 1000px)');
 const toggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('#site-nav');
 
@@ -9,6 +9,7 @@ function setMenu(open, restoreFocus = false) {
   toggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
   nav.classList.toggle('open', open);
   nav.inert = mobile.matches && !open;
+  if (!open) window.dispatchEvent(new Event('rma:navigation-closed'));
   if (restoreFocus) toggle.focus();
 }
 toggle?.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
@@ -21,7 +22,7 @@ document.addEventListener('pointerdown', event => {
 nav?.addEventListener('click', event => { if (event.target.closest('a')) setMenu(false); });
 mobile.addEventListener('change', () => setMenu(false));
 setMenu(false);
-for (const link of nav?.querySelectorAll('a') ?? []) {
+for (const link of nav?.querySelectorAll('a:not([data-language])') ?? []) {
   if (!link.hash && link.pathname.replace(/\/$/, '') === location.pathname.replace(/\/$/, '')) link.setAttribute('aria-current','page');
 }
 
