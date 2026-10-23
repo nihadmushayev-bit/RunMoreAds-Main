@@ -6,7 +6,6 @@
 .language-picker.open .language-options{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition-delay:0s}
 .language-options a{display:flex;align-items:center;justify-content:space-between;gap:15px;min-height:40px;padding:10px 12px;border-radius:4px;font-size:12px;white-space:nowrap;color:#b6b6b0;transition:background-color 140ms ease,color 140ms ease}
 .language-options a:hover,.language-options a:focus-visible{background:#ffffff09;color:var(--paper)}
-.language-options a[aria-current]{color:var(--paper)}.language-options a[aria-current]:after{content:'';width:4px;height:4px;border-radius:50%;background:currentColor;flex:none}
 @media(max-width:1000px){
  .site-header{position:relative;min-height:82px;padding-block:20px;gap:20px}
  .menu-toggle{display:flex;flex-direction:column;justify-content:center;gap:6px;width:38px;height:38px;border:1px solid #444;background:none;padding:9px;flex:none}
@@ -18,7 +17,6 @@
  .language-options{position:static;min-width:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;flex-direction:row;justify-content:space-between;gap:8px;max-height:0;overflow:hidden;transform:none;transition:opacity 150ms ease,max-height 180ms ease,margin 180ms ease,visibility 0s linear 180ms}
  .language-picker.open .language-options{max-height:65px;margin-top:9px;transition-delay:0s}
  .language-options a{font-size:11px;min-height:36px;padding:8px 0;border-radius:0;gap:0;background:transparent!important}
- .language-options a[aria-current]{text-decoration:underline;text-underline-offset:6px;text-decoration-color:#aaa}.language-options a[aria-current]:after{display:none}
 }
 @media(max-width:360px){.language-options{gap:6px}.language-options a{font-size:10px}}
 @media(max-width:700px){html[lang="tr"] .contact-aside h1,html[lang="tr"] .intro h1,html[lang="tr"] .page>.faq h2{font-size:11vw}}

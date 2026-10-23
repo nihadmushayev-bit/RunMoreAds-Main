@@ -25,7 +25,7 @@ Unused original media/Framer assets remain for recovery but are not loaded or re
 
 ## Languages
 
-English is the default on all domains. The outlined header language button sits between About and Let’s work. Its desktop list is ordered English, Türkçe, Azərbaycan türkcəsi; in the mobile/tablet menu the control sits above Results and opens the choices in one horizontal row. Turkish uses `?lang=tr`, Azerbaijani uses `?lang=az`, and English removes the parameter. Internal page links preserve the selected language. Each selection reloads through the existing black entry reveal. Dictionaries are `translations-tr.json` and `translations-az.json` under `dist/assets/run-more-ads/site/`. The footer switch is removed. Keyboard arrows, Escape, outside click, focus management, and reduced motion are supported.
+English is the default on all domains. The outlined header language button sits between About and Let’s work, showing the current language. Its desktop list offers the other two languages using names localised to the page language: English → Azerbaijani / Turkish; Turkish → Azerbaycan Türkçesi / İngilizce; Azerbaijani → İngiliscə / Türkcə. In the mobile/tablet menu the control sits above Results and opens these choices in one horizontal row. Turkish uses `?lang=tr`, Azerbaijani uses `?lang=az`, and English removes the parameter. Internal page links preserve the selected language. Each selection reloads through the existing black entry reveal. Dictionaries are `translations-tr.json` and `translations-az.json` under `dist/assets/run-more-ads/site/`. The footer switch is removed. Keyboard arrows, Escape, outside click, focus management, and reduced motion are supported.
 
 ## Enquiries
 

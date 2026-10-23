@@ -52,7 +52,12 @@ if (document.readyState === 'loading') await new Promise(resolve => document.add
 const picker = document.querySelector('.language-picker');
 const toggle = picker?.querySelector('.language-toggle');
 const options = picker?.querySelector('.language-options');
-const labels = {en:'English', tr:'Türkçe', az:'Azərbaycan türkcəsi'};
+const labels = {
+  en: {en:'English', tr:'Turkish', az:'Azerbaijani'},
+  tr: {en:'İngilizce', tr:'Türkçe', az:'Azerbaycan Türkçesi'},
+  az: {en:'İngiliscə', tr:'Türkcə', az:'Azərbaycanca'}
+}[language];
+const alternatives = {en:['az','tr'], tr:['az','en'], az:['en','tr']}[language];
 function setLanguageMenu(open, focusToggle = false) {
   if (!picker || !toggle || !options) return;
   picker.classList.toggle('open', open);
@@ -63,15 +68,19 @@ function setLanguageMenu(open, focusToggle = false) {
 if (picker) {
   picker.querySelector('.language-current').textContent = labels[language];
   toggle.setAttribute('aria-label', language === 'en' ? 'Choose language' : 'Dil seçin');
-  for (const link of options.querySelectorAll('[data-language]')) {
-    const code = link.dataset.language;
+  options.replaceChildren();
+  for (const code of alternatives) {
+    const link = document.createElement('a');
+    link.dataset.language = code;
+    link.lang = language;
+    link.hreflang = code;
     const url = new URL(location.href);
     url.hash = '';
     if (code === 'en') url.searchParams.delete('lang');
     else url.searchParams.set('lang', code);
     link.href = url.href;
     link.textContent = labels[code];
-    if (code === language) link.setAttribute('aria-current', 'true');
+    options.append(link);
   }
   toggle.addEventListener('click', () => setLanguageMenu(toggle.getAttribute('aria-expanded') !== 'true'));
   document.addEventListener('pointerdown', event => {
