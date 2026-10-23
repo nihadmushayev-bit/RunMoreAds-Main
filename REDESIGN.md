@@ -39,6 +39,12 @@ The latest owner feedback replaces the earlier pill actions with restrained 6px 
 
 Every page runs `entry.js` in the head before its first paint. A black screen overlay fades to transparent in 260ms only after `language.mjs` has applied the selected language. Both language-toggle directions reload through the same entry sequence, as does a direct page load. Native view transitions are disabled to avoid snapshot timing bypassing the black reveal. Back/forward cache restores replay it; a 3-second fallback reveals content if a script or translation request fails. With JavaScript disabled, no overlay is installed. Reduced-motion preferences disable the reveal.
 
+## Hero performance-panel experiment
+
+The owner's latest reference is a compact performance window. The hero heading is reduced to reserve a right-hand panel on desktop; below 981px the card follows the headline, copy, and primary CTA. It uses the existing selected hair-transplant figures: approximately 1,730 started conversations, $1,000 ad spend, and derived $0.58 per conversation. Two horizontal bars compare the recorded healthcare conversation totals (1,730 and 430), with their associated approximate spend shown beside each campaign. No monthly series, ROAS, or patient counts have been invented.
+
+The panel floats within a reserved gutter by ±3px, with ±0.2° rotation over eight seconds. Hover and keyboard focus pause it; reduced-motion disables it. The card links to the full hair-transplant result and carries a visible approximate-figures/source note. All text is available in English and Azerbaijani. This is the single continuous motion explicitly requested for this experiment; existing page-entry, menu, and FAQ behavior remains intact.
+
 ## Implementation
 
 `redesign-site.mjs` renders the new homepage, about and results pages, shares the header/footer, retains completed article/legal/form content, and updates the translation dictionary and sitemap. `dist/assets/run-more-ads/site/method.css` provides the visual system. Unused old Framer/media assets are retained as recoverable source history but are not loaded or referenced by the new pages.
