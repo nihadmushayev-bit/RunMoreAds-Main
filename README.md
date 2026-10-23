@@ -15,7 +15,7 @@ Open http://127.0.0.1:4173. Vercel uses Other, no build command, and `dist` as t
 
 ## Design and content
 
-The October 2026 redesign interprets the owner's photograph of “The Method”: black background, oversized type, thin rules, static numbers, and no photography or video. There is no team gallery, loading screen, marquee, count-up, or scroll animation. Small FAQ indicator and button press transitions respect reduced-motion preferences.
+The October 2026 redesign interprets the owner's photograph of “The Method”: black background, oversized type, thin rules, static numbers, and no photography or video. There is no team gallery, loading screen, marquee, count-up, or scroll animation. A later polish adds short page crossfades, a gentle initial settle, an interruptible FAQ reveal, and an animated mobile menu. These transitions take approximately 0.2 seconds and respect reduced-motion preferences. Logo text stays on one line, and button arrows are SVG paths.
 
 `redesign-site.mjs` generates the homepage, about, and results pages, and updates completed enquiry, article, and legal pages to use the shared shell. Run `node redesign-site.mjs` after editing its content. Styling is in `dist/assets/run-more-ads/site/method.css`.
 

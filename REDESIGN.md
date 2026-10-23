@@ -29,6 +29,10 @@ The owner's previously confirmed agency figures remain $70K+, 50+ brands, founde
 
 No customer testimonials, names, or identities were supplied. The quote on the site is expressly labelled “Our commitment / Our working standard”, written in the agency's voice. It is not attributed to a customer and makes no invented performance claim.
 
+## Follow-up interaction polish
+
+The owner's follow-up requests small, fast animations, overriding the earlier static-only direction. Added 110–210 ms page, menu, and FAQ transitions with reduced-motion support. The FAQ can reverse mid-animation; Escape closes the mobile menu and returns focus. Hidden mobile navigation is inert. The logo name is one line on every screen, arrows use SVG paths, and FAQ plus/minus controls use CSS strokes with a consistent right inset. The hero retains “You run the business. We run the ads.” and the customer-buying-decision message.
+
 ## Implementation
 
 `redesign-site.mjs` renders the new homepage, about and results pages, shares the header/footer, retains completed article/legal/form content, and updates the translation dictionary and sitemap. `dist/assets/run-more-ads/site/method.css` provides the visual system. Unused old Framer/media assets are retained as recoverable source history but are not loaded or referenced by the new pages.

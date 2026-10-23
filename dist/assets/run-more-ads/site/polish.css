@@ -1,0 +1,40 @@
+/* Short, interruptible feedback; no scrolling timelines or continuous motion. */
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:page-out 110ms ease-in both}
+::view-transition-new(root){animation:page-in 170ms ease-out both}
+@keyframes page-out{to{opacity:0}}
+@keyframes page-in{from{opacity:0}to{opacity:1}}
+@keyframes content-settle{from{opacity:.85;transform:translateY(3px)}to{opacity:1;transform:none}}
+main{animation:content-settle 190ms cubic-bezier(.2,.7,.3,1) both}
+.wordmark{gap:10px;font-size:14px;flex-shrink:0}.wordmark>span{max-width:none;white-space:nowrap;line-height:1.2}.footer-top .wordmark{font-size:14px}
+.hero-note>span{display:block}.hero-note .hero-note-lead{margin-bottom:15px}.hero-note>span+span{color:var(--muted);font-size:13px;line-height:1.6}
+.arrow{display:block;flex:0 0 18px;width:18px;height:18px;overflow:visible;transition:transform 170ms cubic-bezier(.2,.7,.3,1)}
+.button{gap:30px;padding-inline:24px;transition:background-color 160ms ease,color 160ms ease,border-color 160ms ease,transform 100ms ease}
+.nav-call{min-height:47px;padding:14px 21px;gap:25px;transition:background-color 160ms ease,border-color 160ms ease,color 160ms ease}
+.nav-call:hover{background:#151515;border-color:#c5c5c0}
+.button .arrow,.nav-call .arrow{margin-right:2px}.button:hover .arrow,.nav-call:hover .arrow{transform:translate(2px,-2px)}
+.button:active .arrow,.nav-call:active .arrow{transform:none}
+.result-row{transition:background-color 170ms ease}.result-row .row-arrow{display:flex;align-items:center;justify-content:center;min-width:30px;padding:0;margin-right:12px}
+.result-row:hover .arrow{transform:translate(2px,-2px)}
+.faq summary{position:relative;padding:24px 48px 24px 14px;transition:background-color 160ms ease,color 160ms ease;align-items:center}
+.faq summary:hover{background:#111}.faq summary:active{background:#191919}
+.faq summary:before,.faq summary:after{content:'';position:absolute;display:block;flex:none;background:currentColor;transform:none;border:0;transition:transform 180ms ease,opacity 150ms ease}
+.faq summary:before{width:13px;height:1px;right:18px;top:calc(50% - .5px)}
+.faq summary:after{width:1px;height:13px;right:24px;top:calc(50% - 6.5px)}
+.faq details[open] summary:after,.faq summary[aria-expanded="true"]:after{transform:rotate(90deg);opacity:0}
+.faq summary[aria-expanded="false"]:after{transform:none;opacity:1}
+.faq-answer{display:flow-root}.faq details p{padding-inline:14px}.faq details[open] summary{color:#fff}
+.menu-toggle{position:relative;transition:background-color 140ms ease,border-color 140ms ease}
+.menu-toggle:hover{background:#161616;border-color:#888}.menu-toggle span{transition:transform 180ms ease,opacity 140ms ease}
+.menu-toggle[aria-expanded="true"] span:first-child{transform:translateY(3.5px) rotate(45deg)}
+.menu-toggle[aria-expanded="true"] span:last-child{transform:translateY(-3.5px) rotate(-45deg)}
+@media(max-width:700px){
+ .wordmark,.footer-top .wordmark{font-size:13px}.site-header{gap:20px}.hero-note .hero-note-lead{margin-bottom:12px}.hero-note>span+span{font-size:12px}
+ .site-header nav{display:flex;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-6px);transition:opacity 170ms ease,transform 190ms cubic-bezier(.2,.7,.3,1),visibility 0s linear 190ms;padding:22px;gap:8px}
+ .site-header nav.open{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition-delay:0s}
+ .site-header nav>a{padding:13px 10px;min-height:43px}.site-header nav>.nav-call{padding:15px 18px;margin-top:6px}
+ .hero-bottom{gap:20px;align-items:center}.hero-bottom .button{padding:17px 20px;gap:16px;font-size:11px;white-space:nowrap;flex-shrink:0}.hero-bottom>.micro{max-width:100px;flex:0 1 100px}
+ .result-row .row-arrow{margin-top:20px;margin-right:0;min-width:22px;padding:0}.row-arrow .arrow{width:18px;height:18px}
+ .faq summary{padding-block:21px}.cta .button{padding-inline:23px}
+}
+@media(prefers-reduced-motion:reduce){main{animation:none!important}::view-transition-old(root),::view-transition-new(root){animation:none!important}.site-header nav,.menu-toggle span,.arrow{transition:none!important}}

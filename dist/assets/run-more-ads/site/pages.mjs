@@ -1,8 +1,4 @@
-
-const toggle=document.querySelector('.menu-toggle'),nav=document.querySelector('#site-nav');
-toggle?.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')!=='true';toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'Close navigation':'Open navigation');nav.classList.toggle('open',open)});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){toggle?.setAttribute('aria-expanded','false');nav?.classList.remove('open')}});
-for(const link of nav?.querySelectorAll('a')??[]){if(link.pathname===location.pathname.replace(/\/$/,'')||link.pathname==='/'&&location.pathname==='/')link.setAttribute('aria-current','page')}
+import './polish.mjs';
 const form=document.querySelector('#contact-form');
 if(matchMedia('(prefers-reduced-motion: reduce)').matches)for(const video of document.querySelectorAll('video[autoplay]'))video.pause();
 let requestId=crypto.randomUUID(),sending=false;
