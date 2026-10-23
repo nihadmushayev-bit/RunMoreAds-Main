@@ -47,4 +47,6 @@ The panel floats within a reserved gutter by ±3px, with ±0.2° rotation over e
 
 ## Implementation
 
+The shared results rows now use equal 18–32px horizontal insets for headings, metrics, and arrows. Hover/focus uses a transparent white gradient fading to zero at both edges, replacing the opaque rectangle that interrupted the page lighting. The divider contrast is reduced. Below 701px each row stacks its title, metric, and contextual information, preserving readable text and safe edge spacing in both languages. The same rules apply to the homepage and results index.
+
 `redesign-site.mjs` renders the new homepage, about and results pages, shares the header/footer, retains completed article/legal/form content, and updates the translation dictionary and sitemap. `dist/assets/run-more-ads/site/method.css` provides the visual system. Unused old Framer/media assets are retained as recoverable source history but are not loaded or referenced by the new pages.
