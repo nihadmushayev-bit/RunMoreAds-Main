@@ -15,9 +15,9 @@ Open http://127.0.0.1:4173. Vercel uses Other, no build command, and `dist` as t
 
 ## Design and content
 
-The October 2026 redesign interprets the owner's photograph of “The Method”: black background, oversized type, thin rules, static numbers, and no photography or video. There is no team gallery, loading screen, marquee, count-up, or scroll animation. A later polish adds short page crossfades, a gentle initial settle, an interruptible FAQ reveal, and an animated mobile menu. These transitions take approximately 0.2 seconds and respect reduced-motion preferences. Logo text stays on one line, and button arrows are SVG paths.
+The October 2026 redesign interprets the owner's photograph of “The Method”: black background, oversized type, thin rules, static numbers, and no photography or video. There is no team gallery, loading screen, marquee, count-up, or scroll animation. A later polish adds short page crossfades, a 260ms entry fade from black, an interruptible FAQ reveal, and an animated mobile menu. These transitions respect reduced-motion preferences. Logo text stays on one line, and button arrows are SVG paths.
 
-`redesign-site.mjs` generates the homepage, about, and results pages, and updates completed enquiry, article, and legal pages to use the shared shell. Run `node redesign-site.mjs` after editing its content. Base styling is in `dist/assets/run-more-ads/site/method.css`; `polish.css` adds short interactions, rounded button shapes, and static white lighting in three selected sections.
+`redesign-site.mjs` generates the homepage, about, and results pages, and updates completed enquiry, article, and legal pages to use the shared shell. Run `node redesign-site.mjs` after editing its content. Base styling is in `dist/assets/run-more-ads/site/method.css`; `polish.css` adds short interactions, 6px button corners, and circular white lighting on one continuous full-width page background.
 
 `REDESIGN.md` documents the reference research, selected campaign figures, and their limitations. Results are reconstructed from the founder's personal campaign records, approximate, and attributed accordingly. Started messaging conversations are not represented as patients or sales. The agency quote is expressly its own working standard, not a customer testimonial. No customer quotes or identities are invented.
 

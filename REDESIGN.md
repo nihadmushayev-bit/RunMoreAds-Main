@@ -35,7 +35,7 @@ The owner's follow-up requests small, fast animations, overriding the earlier st
 
 ## Follow-up lighting and button shapes
 
-The reference photograph suggests a compact oval header action. The navigation CTA and closing/form actions now use pill outlines; the larger hero action keeps a softly rounded rectangular shape (12px). Three static white light washes sit behind the hero (right), method (left), and closing CTA (lower right). They fade into the black canvas without photography, filters, JavaScript, or continuous animation. Mobile uses its own restrained gradient proportions.
+The latest owner feedback replaces the earlier pill actions with restrained 6px corners across navigation, hero, closing, and form buttons. Five stronger circular white light pools are painted on the full-width body canvas, independently of the 1600px content container and section boundaries. Their positions alternate across the page; a minimum 4200px background height keeps them spaced on shorter pages. Gradients fade completely into black without section clipping, filters, images, or continuous animation. Mobile uses a 420px light radius. A 260ms whole-page fade rises from black on entry; navigation crossfades take 110–240ms. Reduced-motion preferences disable the fades.
 
 ## Implementation
 

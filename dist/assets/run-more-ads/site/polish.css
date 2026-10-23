@@ -1,17 +1,18 @@
 /* Short, interruptible feedback; no scrolling timelines or continuous motion. */
 @view-transition{navigation:auto}
 ::view-transition-old(root){animation:page-out 110ms ease-in both}
-::view-transition-new(root){animation:page-in 170ms ease-out both}
+::view-transition-new(root){animation:page-in 240ms ease-out both}
 @keyframes page-out{to{opacity:0}}
 @keyframes page-in{from{opacity:0}to{opacity:1}}
-@keyframes content-settle{from{opacity:.85;transform:translateY(3px)}to{opacity:1;transform:none}}
-main{animation:content-settle 190ms cubic-bezier(.2,.7,.3,1) both}
+@keyframes site-arrive{from{opacity:0}to{opacity:1}}
+body{animation:site-arrive 260ms ease-out both}
+main{animation:none}
 .wordmark{gap:10px;font-size:14px;flex-shrink:0}.wordmark>span{max-width:none;white-space:nowrap;line-height:1.2}.footer-top .wordmark{font-size:14px}
 .hero-note>span{display:block}.hero-note .hero-note-lead{margin-bottom:15px}.hero-note>span+span{color:var(--muted);font-size:13px;line-height:1.6}
 .arrow{display:block;flex:0 0 18px;width:18px;height:18px;overflow:visible;transition:transform 170ms cubic-bezier(.2,.7,.3,1)}
-.button{gap:30px;padding-inline:24px;border-radius:12px;transition:background-color 160ms ease,color 160ms ease,border-color 160ms ease,transform 100ms ease}
-.nav-call{min-height:47px;padding:14px 23px;gap:25px;border-radius:999px;transition:background-color 160ms ease,border-color 160ms ease,color 160ms ease}
-.cta .button,.submit-call{border-radius:999px;padding-inline:27px}
+.button{gap:30px;padding-inline:24px;border-radius:6px;transition:background-color 160ms ease,color 160ms ease,border-color 160ms ease,transform 100ms ease}
+.nav-call{min-height:47px;padding:14px 23px;gap:25px;border-radius:6px;transition:background-color 160ms ease,border-color 160ms ease,color 160ms ease}
+.cta .button,.submit-call{border-radius:6px;padding-inline:27px}
 .nav-call:hover{background:#151515;border-color:#c5c5c0}
 .button .arrow,.nav-call .arrow{margin-right:2px}.button:hover .arrow,.nav-call:hover .arrow{transform:translate(2px,-2px)}
 .button:active .arrow,.nav-call:active .arrow{transform:none}
@@ -25,16 +26,24 @@ main{animation:content-settle 190ms cubic-bezier(.2,.7,.3,1) both}
 .faq details[open] summary:after,.faq summary[aria-expanded="true"]:after{transform:rotate(90deg);opacity:0}
 .faq summary[aria-expanded="false"]:after{transform:none;opacity:1}
 .faq-answer{display:flow-root}.faq details p{padding-inline:14px}.faq details[open] summary{color:#fff}
-.menu-toggle{position:relative;border-radius:9px;transition:background-color 140ms ease,border-color 140ms ease}
+.menu-toggle{position:relative;border-radius:6px;transition:background-color 140ms ease,border-color 140ms ease}
 .menu-toggle:hover{background:#161616;border-color:#888}.menu-toggle span{transition:transform 180ms ease,opacity 140ms ease}
 .menu-toggle[aria-expanded="true"] span:first-child{transform:translateY(3.5px) rotate(45deg)}
 .menu-toggle[aria-expanded="true"] span:last-child{transform:translateY(-3.5px) rotate(-45deg)}
-/* Still, local light washes. No filters, images, or moving background layers. */
-.hero,.method,.cta{position:relative;isolation:isolate}
-.hero:before,.method:before,.cta:before{content:'';position:absolute;z-index:-1;pointer-events:none;inset:0 calc(-1 * var(--gutter))}
-.hero:before{top:0;background:radial-gradient(ellipse 72% 83% at 104% 67%,rgb(255 255 255 / .14),rgb(255 255 255 / .045) 44%,transparent 76%)}
-.method:before{background:radial-gradient(ellipse 54% 60% at -9% 42%,rgb(255 255 255 / .085),transparent 78%)}
-.cta:before{background:radial-gradient(ellipse 60% 85% at 105% 77%,rgb(255 255 255 / .11),transparent 76%)}
+/* One full-width canvas: round light pools continue across section/container edges. */
+body{
+ min-height:100dvh;
+ background-color:#000;
+ background-image:
+  radial-gradient(circle var(--glow-radius) at 77% 9%,rgb(255 255 255 / .24) 0%,rgb(255 255 255 / .12) 24%,rgb(255 255 255 / .035) 53%,transparent 80%),
+  radial-gradient(circle var(--glow-radius) at 16% 34%,rgb(255 255 255 / .19) 0%,rgb(255 255 255 / .085) 28%,rgb(255 255 255 / .025) 57%,transparent 82%),
+  radial-gradient(circle var(--glow-radius) at 82% 57%,rgb(255 255 255 / .20) 0%,rgb(255 255 255 / .09) 28%,rgb(255 255 255 / .025) 57%,transparent 82%),
+  radial-gradient(circle var(--glow-radius) at 25% 81%,rgb(255 255 255 / .17) 0%,rgb(255 255 255 / .075) 28%,rgb(255 255 255 / .02) 57%,transparent 82%),
+  radial-gradient(circle var(--glow-radius) at 75% 99%,rgb(255 255 255 / .19) 0%,rgb(255 255 255 / .08) 28%,transparent 82%);
+ --glow-radius:clamp(430px,43vw,760px);
+ background-size:100% max(100%,4200px);
+ background-repeat:no-repeat;
+}
 @media(max-width:700px){
  .wordmark,.footer-top .wordmark{font-size:13px}.site-header{gap:20px}.hero-note .hero-note-lead{margin-bottom:12px}.hero-note>span+span{font-size:12px}
  .site-header nav{display:flex;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-6px);transition:opacity 170ms ease,transform 190ms cubic-bezier(.2,.7,.3,1),visibility 0s linear 190ms;padding:22px;gap:8px}
@@ -43,8 +52,6 @@ main{animation:content-settle 190ms cubic-bezier(.2,.7,.3,1) both}
  .hero-bottom{gap:20px;align-items:center}.hero-bottom .button{padding:17px 20px;gap:16px;font-size:11px;white-space:nowrap;flex-shrink:0}.hero-bottom>.micro{max-width:100px;flex:0 1 100px}
  .result-row .row-arrow{margin-top:20px;margin-right:0;min-width:22px;padding:0}.row-arrow .arrow{width:18px;height:18px}
  .faq summary{padding-block:21px}.cta .button{padding-inline:25px}
- .hero:before{background:radial-gradient(ellipse 100% 70% at 112% 62%,rgb(255 255 255 / .13),rgb(255 255 255 / .035) 48%,transparent 80%)}
- .method:before{background:radial-gradient(ellipse 80% 46% at -18% 38%,rgb(255 255 255 / .075),transparent 80%)}
- .cta:before{background:radial-gradient(ellipse 95% 75% at 115% 80%,rgb(255 255 255 / .10),transparent 80%)}
+ body{--glow-radius:420px}
 }
-@media(prefers-reduced-motion:reduce){main{animation:none!important}::view-transition-old(root),::view-transition-new(root){animation:none!important}.site-header nav,.menu-toggle span,.arrow{transition:none!important}}
+@media(prefers-reduced-motion:reduce){body,main{animation:none!important}::view-transition-old(root),::view-transition-new(root){animation:none!important}.site-header nav,.menu-toggle span,.arrow{transition:none!important}}
