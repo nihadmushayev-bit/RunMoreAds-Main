@@ -13,6 +13,10 @@ main{animation:none}
 .nav-call:hover{background:#151515;border-color:#c5c5c0}
 .button .arrow,.nav-call .arrow{margin-right:2px}.button:hover .arrow,.nav-call:hover .arrow{transform:translate(2px,-2px)}
 .button:active .arrow,.nav-call:active .arrow{transform:none}
+.icon-link:not(.button),.back{display:inline-flex;align-items:center;gap:8px}
+.icon-link:not(.button) .arrow,.back .arrow{width:14px;height:14px;flex-basis:14px}
+.footer-legal{flex-wrap:wrap;align-items:center;gap:12px 20px;font-size:11px}
+.footer-legal a{min-height:28px}
 .results-list{border-top-color:#ffffff1a}
 .result-row{position:relative;isolation:isolate;padding-inline:clamp(18px,2.2vw,32px);border-bottom-color:#ffffff1a;background:transparent}
 .result-row:hover{background:transparent}
@@ -21,6 +25,7 @@ main{animation:none}
 .result-row h3{line-height:1.35;text-wrap:balance;overflow-wrap:break-word}
 .result-row .row-arrow{display:flex;align-items:center;justify-content:center;min-width:30px;padding:0;margin-right:0}
 .results-note{padding-inline:clamp(18px,2.2vw,32px)}
+.section-heading>div{min-width:0}
 .result-row:hover .arrow{transform:translate(2px,-2px)}
 .faq summary{position:relative;padding:24px 48px 24px 14px;transition:background-color 160ms ease,color 160ms ease;align-items:center}
 .faq summary:hover{background:#111}.faq summary:active{background:#191919}
@@ -49,6 +54,12 @@ body{
  background-repeat:no-repeat;
 }
 @media(max-width:700px){
+ html[lang="az"] .method .section-title{font-size:12vw}
+ .stat{min-width:0}.stat strong{font-size:clamp(24px,7.5vw,35px);white-space:nowrap}.stat span{max-width:100%}
+ .case-stats{grid-template-columns:1fr;gap:0;padding-block:0}
+ .case-stats>div{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-block:22px;border-bottom:1px solid var(--line)}
+ .case-stats>div:last-child{border-bottom:0}.case-stats strong{font-size:34px;white-space:nowrap;flex:none}
+ .case-stats span{font-size:11px;line-height:1.5;margin:0;max-width:150px;min-width:0;text-align:right}
  .wordmark,.footer-top .wordmark{font-size:13px}.site-header{gap:20px}.hero-note .hero-note-lead{margin-bottom:12px}.hero-note>span+span{font-size:12px}
  .site-header nav{display:flex;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-6px);transition:opacity 170ms ease,transform 190ms cubic-bezier(.2,.7,.3,1),visibility 0s linear 190ms;padding:22px;gap:8px}
  .site-header nav.open{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition-delay:0s}

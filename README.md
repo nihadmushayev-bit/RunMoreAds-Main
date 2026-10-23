@@ -15,7 +15,7 @@ Open http://127.0.0.1:4173. Vercel uses Other, no build command, and `dist` as t
 
 ## Design and content
 
-The October 2026 redesign interprets the owner's photograph of “The Method”: black background, oversized type, thin rules, static numbers, and no photography or video. There is no team gallery, loading screen, marquee, count-up, or scroll animation. A later polish adds short page crossfades, a 260ms entry fade from black, an interruptible FAQ reveal, and an animated mobile menu. These transitions respect reduced-motion preferences. Logo text stays on one line, and button arrows are SVG paths.
+The October 2026 redesign interprets the owner's photograph of “The Method”: black background, oversized type, thin rules, static numbers, and no photography or video. There is no team gallery, loading screen, marquee, count-up, or scroll animation. A later polish adds a 260ms entry fade from black, an interruptible FAQ reveal, and an animated mobile menu. These transitions respect reduced-motion preferences. Logo text stays on one line. Button, footer, contact, back, and fallback-link arrows are SVG paths.
 
 `redesign-site.mjs` generates the homepage, about, and results pages, and updates completed enquiry, article, and legal pages to use the shared shell. Run `node redesign-site.mjs` after editing its content. Base styling is in `dist/assets/run-more-ads/site/method.css`; `polish.css` adds short interactions, 6px button corners, and circular white lighting on one continuous full-width page background.
 
@@ -25,7 +25,7 @@ Unused original media/Framer assets remain for recovery but are not loaded or re
 
 ## Languages
 
-English is the default on all domains. The outlined header language button sits between About and Let’s work, showing the current language. Its desktop list offers the other two languages using names localised to the page language: English → Azerbaijani / Turkish; Turkish → Azerbaycan Türkçesi / İngilizce; Azerbaijani → İngiliscə / Türkcə. In the mobile/tablet menu the control sits above Results and opens these choices in one horizontal row. Turkish uses `?lang=tr`, Azerbaijani uses `?lang=az`, and English removes the parameter. Internal page links preserve the selected language. Each selection reloads through the existing black entry reveal. Dictionaries are `translations-tr.json` and `translations-az.json` under `dist/assets/run-more-ads/site/`. The footer switch is removed. Keyboard arrows, Escape, outside click, focus management, and reduced motion are supported.
+English is the default on all domains. The outlined header language button sits between About and Let’s work, showing the current language. Its desktop list offers the other two languages using names localised to the page language: English → Azerbaijani / Turkish; Turkish → Azerbaycan / İngilizce; Azerbaijani → İngiliscə / Türkcə. In the mobile/tablet menu the control sits above Results and opens these choices in one horizontal row. Turkish uses `?lang=tr`, Azerbaijani uses `?lang=az`, and English removes the parameter. Internal page links preserve the selected language. Each selection reloads through the existing black entry reveal. Dictionaries are `translations-tr.json` and `translations-az.json` under `dist/assets/run-more-ads/site/`. Context-specific heading keys avoid ambiguous word translations. Page titles and descriptions are localised as well. The footer switch is removed. Keyboard arrows, Escape, outside click, focus management, and reduced motion are supported.
 
 ## Enquiries
 

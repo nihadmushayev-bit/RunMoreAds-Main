@@ -27,9 +27,15 @@ function updatePage() {
   }
   if (language === 'en') return;
   document.title = translate(document.title);
+  const socialTitle = document.querySelector('meta[property="og:title"]');
+  if (socialTitle) socialTitle.content = document.title;
+  for (const meta of document.querySelectorAll('meta[name="description"],meta[property="og:description"]')) {
+    const replacement = translate(meta.content);
+    if (meta.content !== replacement) meta.content = replacement;
+  }
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
     acceptNode(node) {
-      return node.parentElement?.closest('script,style,textarea,code,pre,svg,[data-no-translate],[contenteditable]')
+      return node.parentElement?.closest('script,style,textarea,code,pre,svg,[data-i18n],[data-no-translate],[contenteditable]')
         ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
     }
   });
@@ -37,6 +43,10 @@ function updatePage() {
   while ((node = walker.nextNode())) {
     const translated = translate(node.nodeValue);
     if (translated !== node.nodeValue) node.nodeValue = translated;
+  }
+  for (const element of document.querySelectorAll('[data-i18n]')) {
+    const value = dictionary[element.dataset.i18n];
+    if (value !== undefined && element.textContent !== value) element.textContent = value;
   }
   for (const element of document.querySelectorAll('[placeholder],[aria-label],[title]')) {
     if (element.closest('[data-no-translate]')) continue;
@@ -54,7 +64,7 @@ const toggle = picker?.querySelector('.language-toggle');
 const options = picker?.querySelector('.language-options');
 const labels = {
   en: {en:'English', tr:'Turkish', az:'Azerbaijani'},
-  tr: {en:'İngilizce', tr:'Türkçe', az:'Azerbaycan Türkçesi'},
+  tr: {en:'İngilizce', tr:'Türkçe', az:'Azerbaycan'},
   az: {en:'İngiliscə', tr:'Türkcə', az:'Azərbaycanca'}
 }[language];
 const alternatives = {en:['az','tr'], tr:['az','en'], az:['en','tr']}[language];
